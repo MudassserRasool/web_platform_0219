@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+.next/
+out/
+dist/
+build/
+
+# Minified files
+*.min.js
+*.min.css
+
+# Specific problematic files
+components/poster/html2canvas.min.js
+
+# Environment files
+.env*
+
+# Log files
+*.log
+
+# Package manager files
+package-lock.json
+yarn.lock
+
+# Cache directories
+.cache/
+.parcel-cache/ 
