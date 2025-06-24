@@ -14,7 +14,13 @@
     "build": "next build",
     "start": "concurrently \"node backend/server.js\" \"next start\"",
     "lint": "next lint",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "compile": "hardhat compile",
+    "deploy": "hardhat run scripts/deploy.js --network localhost",
+    "test": "hardhat test",
+    "check-owner": "hardhat run scripts/checkOwner.js --network localhost",
+    "update-address": "node scripts/updateAddress.js",
+    "transfer-ownership": "hardhat run scripts/transferOwnership.js --network localhost"
   },
   "dependencies": {
     "@floating-ui/react": "^0.25.0",
@@ -84,7 +90,10 @@
     "prettier": "^2.8.8",
     "prettier-plugin-tailwindcss": "^0.4.1",
     "tailwindcss": "^3.3.3",
-    "typescript": "^5.1.6"
+    "typescript": "^5.1.6",
+    "@nomicfoundation/hardhat-toolbox": "^2.0.2",
+    "@openzeppelin/contracts": "^4.9.3",
+    "hardhat": "^2.17.2"
   },
   "browserslist": {
     "production": [

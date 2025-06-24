@@ -1,36 +1,29 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import Image from 'next/image';
-import Button from '../button';
-import { useAccount, useNetwork, useSwitchNetwork, useWaitForTransaction } from 'wagmi';
-import { isConnectPopoverOpen } from '../../store/web3/state';
-import { useSetRecoilState } from 'recoil';
-import { polygon, bsc } from 'wagmi/chains';
-import classNames from 'classnames';
-import { Tooltip } from '../tooltip';
-import Table from '../table';
-import { createColumnHelper } from '@tanstack/react-table';
-import dayjs from 'dayjs';
-import {
-  BridgeTxs,
-  HistoryResult,
-  useBadgeHistory,
-  useBadgeNFT,
-  useBridgeContract,
-  useNFTContract,
-} from '@/hooks/bridge';
 import { BadgeInfo, COMMUNITY_NFT_CAMPAIGN_ID, GalxeBadge, NFTQueryResult, P12_COMMUNITY_BADGE } from '@/constants';
-import { groupBy } from 'lodash-es';
 import {
   BADGE_BRIDGE_ADDRESS,
   BADGE_BRIDGE_ADDRESS_BSC,
   BADGE_BRIDGE_ADDRESS_BSC_OLD,
   BADGE_BRIDGE_ADDRESS_OLD,
 } from '@/constants/addresses';
-import Message from '../message';
-import { toast } from 'react-toastify';
+import { BridgeTxs, HistoryResult, useBadgeHistory, useBadgeNFT, useBridgeContract, useNFTContract } from '@/hooks/bridge';
 import { shortenHash } from '@/utils';
-import ChainIcon from './ChainIcon';
+import { createColumnHelper } from '@tanstack/react-table';
+import classNames from 'classnames';
+import dayjs from 'dayjs';
+import { groupBy } from 'lodash-es';
+import Image from 'next/image';
+import React, { useEffect, useMemo, useState } from 'react';
 import ReactGA from 'react-ga4';
+import { toast } from 'react-toastify';
+import { useSetRecoilState } from 'recoil';
+import { useAccount, useNetwork, useSwitchNetwork, useWaitForTransaction } from 'wagmi';
+import { bsc, polygon } from 'wagmi/chains';
+import { isConnectPopoverOpen } from '../../store/web3/state';
+import Button from '../button';
+import Message from '../message';
+import Table from '../table';
+import { Tooltip } from '../tooltip';
+import ChainIcon from './ChainIcon';
 
 const historyColumnHelper = createColumnHelper<BridgeTxs>();
 
@@ -144,7 +137,7 @@ export default function BridgeSwitch() {
       .catch((error) => {
         console.log(error);
       });
-  }, [selectedBadge, chain?.id, address]);
+  }, [selectedBadge, chain?.id, address, NFTContract]);
 
   useEffect(() => {
     const galxeBadges: GalxeBadge[] = ((data as any)?.user as NFTQueryResult)?.galxeBadges;

@@ -1,22 +1,22 @@
-import React, { useEffect, useRef } from 'react';
-import { polygon } from 'wagmi/chains';
-import { Platform } from '@/constants';
-import { useRouter } from 'next/router';
 import Button from '@/components/button';
 import Popover from '@/components/popover';
+import PosterButton from '@/components/poster/PosterButton';
+import { Platform } from '@/constants';
+import { useIsMounted } from '@/hooks/useIsMounted';
+import { useMutationLogin } from '@/hooks/user';
+import { useSignInWithEthereum } from '@/hooks/useSignInWithEthereum';
+import { posterCaptureAtom } from '@/store/poster/state';
+import { accessTokenAtom } from '@/store/user/state';
+import { isConnectPopoverOpen } from '@/store/web3/state';
+import { getAccessToken } from '@/utils/authorization';
 import { watchAccount } from '@wagmi/core';
+import { useRouter } from 'next/router';
+import { useEffect, useRef } from 'react';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi';
+import { polygon } from 'wagmi/chains';
 import WalletPopover from './WalletPopover';
 import Web3StatusInner from './Web3StatusInner';
-import { useMutationLogin } from '@/hooks/user';
-import { useIsMounted } from '@/hooks/useIsMounted';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { getAccessToken } from '@/utils/authorization';
-import { posterCaptureAtom } from '@/store/poster/state';
-import { isConnectPopoverOpen } from '@/store/web3/state';
-import PosterButton from '@/components/poster/PosterButton';
-import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi';
-import { useSignInWithEthereum } from '@/hooks/useSignInWithEthereum';
-import { accessTokenAtom } from '@/store/user/state';
 
 function Web3Status() {
   const router = useRouter();
@@ -64,7 +64,7 @@ function Web3Status() {
     if (chain?.unsupported) {
       return (
         <Button size="small" type="error" className="h-10" onClick={() => switchNetwork?.()}>
-          Wrong Network
+          Wrong Network{chain?.id}
         </Button>
       );
     }

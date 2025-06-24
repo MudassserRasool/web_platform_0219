@@ -1,22 +1,22 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
 import dayjs from 'dayjs';
+import isBetween from 'dayjs/plugin/isBetween';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import ReactGA from 'react-ga4';
 import { toast } from 'react-toastify';
-import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi';
-import isBetween from 'dayjs/plugin/isBetween';
-import { useMutation } from '@tanstack/react-query';
 import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi';
+import { ARCANA_CHAIN_ID, COLLAB_CHAIN_ID } from '../../constants';
+import { useCollabIsClaim, useCollabIsJoined, useFetchCollabUserInfo } from '../../hooks/collab';
+import { useCollabContract } from '../../hooks/useContract';
+import { useIsMounted } from '../../hooks/useIsMounted';
+import { fetchCollabJoin, fetchCollabUserInfo } from '../../lib/api';
+import type { CollabInfoType, CollabUserInfo, CollabUserParams, Response } from '../../lib/types';
+import { collabClaimModalAtom, collabUserInfoAtom } from '../../store/collab/state';
+import { isConnectPopoverOpen } from '../../store/web3/state';
+import { getEtherscanLink } from '../../utils';
 import Button from '../button';
 import Message from '../message';
-import { getEtherscanLink } from '../../utils';
-import { useIsMounted } from '../../hooks/useIsMounted';
-import { useCollabContract } from '../../hooks/useContract';
-import { isConnectPopoverOpen } from '../../store/web3/state';
-import { ARCANA_CHAIN_ID, COLLAB_CHAIN_ID } from '../../constants';
-import { fetchCollabJoin, fetchCollabUserInfo } from '../../lib/api';
-import { collabClaimModalAtom, collabUserInfoAtom } from '../../store/collab/state';
-import { useCollabIsJoined, useCollabIsClaim, useFetchCollabUserInfo } from '../../hooks/collab';
-import type { CollabInfoType, CollabUserInfo, CollabUserParams, Response } from '../../lib/types';
 
 dayjs.extend(isBetween);
 
@@ -127,7 +127,17 @@ export default function CollabInfoButton({ data }: CollabInfoButtonProps) {
       toast.error(<Message title="Ah shit, here we go again" message="save error" />);
       setIsWriteLoading(false);
     }
-  }, [isChainJoined, collabContract, address, isCorrectNetwork, setConnectOpen, switchNetwork, collabCode, onChainIpfs]);
+  }, [
+    isChainJoined,
+    collabContract,
+    address,
+    isCorrectNetwork,
+    setConnectOpen,
+    switchNetwork,
+    collabCode,
+    onChainIpfs,
+    mutationJoin,
+  ]);
 
   useEffect(() => {
     if (

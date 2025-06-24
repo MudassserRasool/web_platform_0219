@@ -1,16 +1,6 @@
-import React from 'react';
-import { RecoilRoot } from 'recoil';
-import ButterflyGL from '../butterflyGL';
-import LayoutHeader from './LayoutHeader';
-import LayoutFooter from './LayoutFooter';
-import ToastIcon from '../svg/ToastIcon';
-import { ToastContainer } from 'react-toastify';
-import InviteDialog from '../dialog/InviteDialog';
-import { createConfig, WagmiConfig } from 'wagmi';
-import RoadmapDialog from '../dialog/RoadmapDialog';
-import GamerEmailDialog from '../dialog/GamerEmailDialog';
 import {
   bitKeepConnector,
+  chains,
   metaMaskConnector,
   particleAuthConnector,
   publicClient,
@@ -18,14 +8,26 @@ import {
   walletConnectConnector,
   webSocketPublicClient,
 } from '@/connectors';
-import classNames from 'classnames';
 import { fontVariants } from '@/constants/font';
+import classNames from 'classnames';
+import React from 'react';
+import { ToastContainer } from 'react-toastify';
+import { RecoilRoot } from 'recoil';
+import { createConfig, WagmiConfig } from 'wagmi';
+import ButterflyGL from '../butterflyGL';
+import GamerEmailDialog from '../dialog/GamerEmailDialog';
+import InviteDialog from '../dialog/InviteDialog';
+import RoadmapDialog from '../dialog/RoadmapDialog';
+import ToastIcon from '../svg/ToastIcon';
+import LayoutFooter from './LayoutFooter';
+import LayoutHeader from './LayoutHeader';
 
 const config = createConfig({
   autoConnect: true,
   connectors: [metaMaskConnector, tokenPocketConnector, bitKeepConnector, particleAuthConnector, walletConnectConnector],
   publicClient,
   webSocketPublicClient,
+  chains,
 });
 
 export default function Layout({ children }: React.PropsWithChildren<{}>) {

@@ -1,14 +1,14 @@
-import { configureChains } from 'wagmi';
-import { bsc, bscTestnet, mainnet, polygon, linea, lineaTestnet } from 'wagmi/chains';
-import { publicProvider } from 'wagmi/providers/public';
-import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
-import { InjectedConnector } from 'wagmi/connectors/injected';
-import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
-import { ParticleAuthConnector } from './particalAuth';
 import { PARTICLE_APP_ID, PARTICLE_CLIENT_KEY, PARTICLE_PROJECT_ID } from '@/constants';
+import { configureChains } from 'wagmi';
+import { bsc, bscTestnet, linea, lineaTestnet, localhost, mainnet, polygon } from 'wagmi/chains';
+import { InjectedConnector } from 'wagmi/connectors/injected';
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
+import { publicProvider } from 'wagmi/providers/public';
+import { ParticleAuthConnector } from './particalAuth';
 
 export const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [mainnet, bsc, bscTestnet, polygon, linea, lineaTestnet],
+  [mainnet, bsc, bscTestnet, polygon, linea, lineaTestnet, localhost],
   [publicProvider()],
 );
 
